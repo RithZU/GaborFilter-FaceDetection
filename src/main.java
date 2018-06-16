@@ -54,8 +54,9 @@ public class main {
 			}
 			gabors.add(perGabor);
 		}
-		lena = Utils.readImage("res/lena.jpg");
-		
+		//lena = Utils.readImage("res/lena.jpg");
+//		lena = Utils.readImage("res/lena3.jpg");
+		lena = Utils.readImage("res/Grayfaces_6.jpg");
 		
 		gabor0 = gabors.get(0);
 		gabor0Pixels = Utils.imageToPixels(gabor0);
@@ -63,7 +64,7 @@ public class main {
 		int gaborHeight = gabor0.getHeight();
 		
 		lena = Utils.convertToGrayScaled(lena);
-		Utils.writeImage(lena, "grayLena");
+		Utils.writeImage(lena, "Grayfaces__6");
 		lenaPixels = Utils.imageToPixels(lena);
 		
 		
@@ -95,68 +96,87 @@ public class main {
 		int stepSize= 90/factor;
 		int n=0;
 		double[][] result = new double[lena.getWidth()/stepSize][lena.getHeight()/stepSize];
-		for(int g=0;g<gabors.size();g++)
-		{
-		for(int i=0;i<=result.length-stepSize+1;i++) {
-			
-			for(int j=0;j<=result[0].length-stepSize+1;j++) {
-				//System.out.println(i+"\t"+j);
-				
-				
-				double tempResult = 0;
-				
-				subLena = lena.getSubimage(stepSize*i, j*stepSize, gaborWidth, gaborHeight);
-				
-				tempResult = Matrix.dotProduct(Utils.imageToPixels(subLena), Utils.imageToPixels(gabors.get(g)), 90);
-				System.out.print(tempResult+"\t");
-				result[i][j] = tempResult;
-				//Utils.writeImage(subLena, "subLena"+(n++));
-				
-				
-				
-//				subLenaPixels = Utils.imageToPixels(subLena);
+//		for(int g=0;g<gabors.size();g++)
+//		{
+//		for(int i=0;i<=result.length-stepSize+1;i++) {
+//			
+//			for(int j=0;j<=result[0].length-stepSize+1;j++) {
+//				//System.out.println(i+"\t"+j);
 //				
-//				subLenaPixels = Utils.normalizePixels(subLenaPixels, gaborWidth);
-				//Utils.writeImage(Utils.pixelsToImage(subLenaPixels), "subGabored"+(n++));
 //				
-//				subi = 0;
-//				subj=0;
+//				double tempResult = 0;
 //				
-//				for(int k=i;k<=90+i;k++) {
+//				subLena = lena.getSubimage(stepSize*i, j*stepSize, gaborWidth, gaborHeight);
+//				
+//				tempResult = Matrix.dotProduct(Utils.imageToPixels(subLena), Utils.imageToPixels(gabors.get(g)), 90);
+//				//System.out.print(tempResult+"\t");
+//				result[i][j] = tempResult;
+//				//Utils.writeImage(subLena, "subLena"+(n++));
+//				
+//				
+//				
+////				subLenaPixels = Utils.imageToPixels(subLena);
+////				
+////				subLenaPixels = Utils.normalizePixels(subLenaPixels, gaborWidth);
+//				//Utils.writeImage(Utils.pixelsToImage(subLenaPixels), "subGabored"+(n++));
+////				
+////				subi = 0;
+////				subj=0;
+////				
+////				for(int k=i;k<=90+i;k++) {
+////					
+////					//System.out.println(subi+"\t"+subj);
+////					++subi;
+////					++subj;
+////					//System.out.println();
+////					for(int l=j;l<=90+j;l++) {
+////						//System.out.println(subi+"\t"+subj);
+////						if(subi<90 && subj<90) {
+////						gaboredLenaPixels[k][l] = subLenaPixels[subi][subj];
+////						}
+////						System.out.println(k+"\t"+l);
+////						
+////						
+////						
+////					}
+////					
 //					
-//					//System.out.println(subi+"\t"+subj);
-//					++subi;
-//					++subj;
-//					//System.out.println();
-//					for(int l=j;l<=90+j;l++) {
-//						//System.out.println(subi+"\t"+subj);
-//						if(subi<90 && subj<90) {
-//						gaboredLenaPixels[k][l] = subLenaPixels[subi][subj];
-//						}
-//						System.out.println(k+"\t"+l);
-//						
-//						
-//						
-//					}
 //					
-					
-					
-//					
-//				}
-//				subi = 0;
-//				subj=0;
-				
-			}
-			System.out.println();
-			
-			
-			
+////					
+////				}
+////				subi = 0;
+////				subj=0;
+//				
+//			}
+//			//System.out.println();
+//			
+//			
+//			
+//		}
+//		Utils.writeImage(Utils.pixelsToImage(result), "gaboredImage"+g);
+//		System.out.println("Done"+g);
+//		}
+		BufferedImage image_gabor0=null;
+		try {
+			image_gabor0 = ImageIO.read(new File("res/gaboredImage0.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		Utils.writeImage(Utils.pixelsToImage(result), "gaboredImage"+g);
-		System.out.println("Done");
+		BufferedImage image_gabor4 = null;
+		try {
+			image_gabor4 = ImageIO.read(new File("res/gaboredImage4.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-	System.out.println("Done");
+		//Utils.writeImage(Utils.ImageAddition(image_gabor0, image_gabor4), "Gabor04");
+		BufferedImage imageTest = Utils.readImage("res/gaboredImage0.jpg");
+		//Utils.writeImage(Utils.ImageAddition(image_gabor0, image_gabor4), "Gabor04");
+		Utils.writeImage(Utils.shiftingAvg(imageTest, 25), "ShiftAverage0");
+		System.out.println("Done");
+		
 		
 		
 //		for(int i=0;i<gaboredLenaPixels.length;i++) {

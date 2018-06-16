@@ -93,5 +93,63 @@ public class Utils {
 		
 		return newMatrix;
 	}
+	public static BufferedImage ImageAddition(BufferedImage img1,BufferedImage img2) {
+		BufferedImage res = new BufferedImage(img1.getWidth(),img1.getHeight(),BufferedImage.TYPE_INT_RGB);
+		for(int i=0;i<img1.getWidth();i++) {
+			for(int j=0;j<img1.getHeight();j++) {
+				int img1_rgb = img1.getRGB(i, j);
+				int img1_red = (img1_rgb>>16)&0xff;
+				int img1_green = (img1_rgb>>8)&0xff;
+				int img1_blue = (img1_rgb)&0xff;
+				
+				int img2_rgb = img2.getRGB(i, j);
+				int img2_red = (img2_rgb>>16)&0xff;
+				int img2_green = (img2_rgb>>8)&0xff;
+				int img2_blue = (img2_rgb)&0xff;
+				
+				int res_red = (img1_red+img2_red)/2;
+				int res_green = (img1_green+img2_green)/2;
+				int res_blue = (img1_blue+img2_blue)/2;
+				
+				int res_rgb = ((res_red&0x0ff)<<16)|((res_green&0x0ff)<<8)|(res_blue&0x0ff);
+				res.setRGB(i, j, res_rgb);
+				
+				
+			}
+			
+		}
+		return res;
+	}
+	public static BufferedImage shiftingAvg(BufferedImage img,int shift) {
+		BufferedImage res = new BufferedImage(img.getWidth(),img.getHeight(),BufferedImage.TYPE_INT_RGB);
+		for(int i=0;i<img.getWidth()-shift;i++) {
+			for(int j=0;j<img.getHeight();j++) {
+				int rgb = img.getRGB(i, j);
+				
+				int img_red = (rgb>>16)&0xff;
+				int img_green = (rgb>>8)&0xff;
+				int img_blue = (rgb)&0xff;
+				
+				int rgb_shift = img.getRGB(i+shift, j);
+				
+				int imgShift_red = (rgb_shift>>16)&0xff;
+				int imgShift_green = (rgb_shift>>8)&0xff;
+				int imgShift_blue = (rgb_shift)&0xff;
+				
+				int res_red = (img_red+imgShift_red)/2;
+				int res_green = (img_green+imgShift_green)/2;
+				int res_blue = (img_blue+imgShift_blue)/2;
+				
+				int res_rgb = ((res_red&0x0ff)<<16)|((res_green&0x0ff)<<8)|(res_blue&0x0ff);
+				res.setRGB(i, j, res_rgb);
+				
+				
+				
+			}
+			
+		}
+		return res;
+	
+	}
 	
 }

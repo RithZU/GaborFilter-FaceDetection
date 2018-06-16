@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 
 public class Matrix {
 	
@@ -12,11 +13,11 @@ public class Matrix {
 
         for (int i = 0; i < 90; i++) { // aRow
             for (int j = 0; j < 90; j++) { // bColumn
-                result += (A[i][j]/255) * (B[i][j]/255);
+                result += ((A[i][j]/255) * (B[i][j])/255);
             }
         }
         result =   (result/ Math.pow(gaborSize, 2));
-        result = result * 255;
+        result = (result * 255);
 
         return result;
     }
@@ -27,5 +28,6 @@ public class Matrix {
 			}
 		}
 	}
+	
 
 }
